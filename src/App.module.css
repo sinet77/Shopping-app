@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.background {
+  background-color: hsl(0, 0%, 98%);
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: hsl(138, 51%, 53%);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+  color: hsl(200, 15%, 8%);
+}
+
+.headTitle {
+  font-size: 25px;
+}
+
+.cartIcon {
+  width: 50px;
+  height: auto;
+  margin-left: 10px;
+}
+.cartButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-color: black;
+}
+
+.cartButton:hover {
+  border: 1px solid green;
+  transform: scale(1.2);
+}

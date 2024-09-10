@@ -1,0 +1,42 @@
+.productBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  height: auto;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+.description {
+  padding: 20px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  max-width: 100%;
+  margin-bottom: 30px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.button {
+  background-color: yellowgreen;
+  color: black;
+  border-color: black;
+  border: 2px solid black;
+}
+
+.button:hover {
+  background-color: yellow;
+  border-color: black;
+}
