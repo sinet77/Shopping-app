@@ -10,13 +10,18 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
   const [category, setCategory] = useState<string>("");
   const [getCategories, setGetCategories] = useState<string[]>([]);
+  const [productsInCart, setProductsInCart] = useState<ProductProps[]>([]);
   const [numberOfProductsInCart, setNumberOfProductsInCart] =
     useState<number>(0);
+
+  const [addProductToFavorites, setAddProductToFavorites] = useState<
+    ProductProps[]
+  >([]);
 
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/cart");
+    navigate("/cart", { state: { productsInCart } });
   };
 
   useEffect(() => {
@@ -67,6 +72,23 @@ function App() {
     setCategory(value);
   };
 
+  const handleAddToCart = (product: ProductProps) => {
+    setNumberOfProductsInCart((prev) => prev + 1);
+    setProductsInCart((prev) => [...prev, product]);
+  };
+
+  const addFavorite = (product: ProductProps) => {
+    setAddProductToFavorites((prev) => [...prev, product]);
+  };
+
+  const removeFavorite = (productId: number) => {
+    setAddProductToFavorites((prev) =>
+      prev.filter((item) => item.id !== productId)
+    );
+  };
+
+  console.log("Ulubione produkty:", addProductToFavorites);
+
   return (
     <div className={style.background}>
       <div className={style.headline}>
@@ -95,7 +117,12 @@ function App() {
           <Product
             key={product.id}
             product={product}
-            setNumberOfProductsInCart={setNumberOfProductsInCart}
+            handleAddToCart={handleAddToCart}
+            addFavorite={addFavorite}
+            removeFavorite={removeFavorite}
+            isFavorite={addProductToFavorites.some(
+              (item) => item.id === product.id
+            )}
           />
         ))}
       </div>
