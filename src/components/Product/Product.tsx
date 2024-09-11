@@ -2,13 +2,19 @@ import { ProductProps } from "./ProductTypes";
 import style from "./Product.module.css";
 
 interface ProductType {
-  product: ProductProps; // Typ propsów dla komponentu Product
+  product: ProductProps;
+  setNumberOfProductsInCart: (value: (prev: number) => number) => void;
 }
 
-export default function Product({ product }: ProductType) {
+export default function Product({
+  product,
+  setNumberOfProductsInCart,
+}: ProductType) {
   const { id, title, price, category, description, image } = product;
 
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    setNumberOfProductsInCart((prev) => prev + 1);
+  };
 
   return (
     <div className={style.productBox}>
