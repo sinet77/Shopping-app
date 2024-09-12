@@ -3,11 +3,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 30px;
 }
 
 .cartContainer {
-  padding: 20px;
+  padding: 30px;
   background-color: #f0f0f0;
+  border-radius: 5px;
 }
 
 .productItem {
@@ -18,6 +20,7 @@ body {
   gap: 20px;
   border: 1px solid rgb(51, 51, 212);
   padding: 20px;
+  position: relative;
 }
 
 .productImage {
@@ -45,4 +48,47 @@ body {
   font-size: 20px;
   font-weight: bold;
   color: black;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+.closeButton:hover,
+.removeButton:hover {
+  background-color: rgba(219, 16, 16, 0.432);
+  color: black;
+  border-color: black;
+}
+
+.removeButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+}
+
+.headContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productPrice {
+  margin: 0;
+  text-align: center;
+}
+
+.inputQuantityNumber {
+  background-color: blanchedalmond;
+  color: black;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 30%;
+  height: 30px;
+  font-size: 15px;
 }
