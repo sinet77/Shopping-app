@@ -5,14 +5,19 @@ import { useEffect, useState } from "react";
 
 export default function Cart() {
   const location = useLocation();
-  const productsInCart: ProductProps[] = location.state?.productsInCart || [];
+  const initialProductsInCart: ProductProps[] =
+    location.state?.productsInCart || [];
+
+  const [productsInCart, setProductsInCart] = useState<ProductProps[]>(
+    initialProductsInCart
+  );
 
   const [togetherPrice, setTogetherPrice] = useState<number>(0);
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
     [key: number]: number;
   }>(() => {
     const startingQuantities: { [key: number]: number } = {};
-    productsInCart.forEach((product) => {
+    initialProductsInCart.forEach((product) => {
       startingQuantities[product.id] = 1;
     });
     return startingQuantities;
@@ -30,6 +35,10 @@ export default function Cart() {
 
   function handleCloseButton() {
     navigate("/");
+  }
+
+  function handleRemoveButton(id: number) {
+    setProductsInCart((prev) => prev.filter((product) => product.id !== id));
   }
 
   function handleInputValue(
@@ -72,7 +81,12 @@ export default function Cart() {
                 Price: $
                 {(product.price * priceWithQuantity[product.id]).toFixed(2)}
               </p>
-              <button className={style.removeButton}>Remove</button>
+              <button
+                className={style.removeButton}
+                onClick={() => handleRemoveButton(product.id)}
+              >
+                Remove
+              </button>
             </div>
           ))
         ) : (
