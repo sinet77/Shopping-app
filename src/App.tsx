@@ -104,14 +104,18 @@ function App() {
           </div>
         </button>
       </div>
-      <select onChange={handleCategoryChange} value={category}>
-        <option value="">All categories</option>
-        {getCategories.map((category) => (
-          <option key={category} value={category}>
-            {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
-          </option>
-        ))}
-      </select>
+      <div className={style.optionsStyle}>
+        Choose category:
+        <select onChange={handleCategoryChange} value={category}>
+          <option value="">All categories</option>
+          {getCategories.map((category) => (
+            <option key={category} value={category}>
+              {category.charAt(0).toUpperCase() +
+                category.slice(1).toLowerCase()}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className={style.main}>
         {filteredProducts.map((product) => (
           <Product

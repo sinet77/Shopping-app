@@ -7,7 +7,9 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 30px;
-  margin-top: 50px;
+  margin-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .background {
@@ -64,4 +66,13 @@
   border: 1px solid black;
   background-color: #99d49b;
   font-size: 15px;
+}
+
+.optionsStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: black;
+  gap: 10px;
 }
