@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { ProductProps } from "./components/Product/ProductTypes";
-import { useNavigate } from "react-router-dom";
 
 interface AppContextType {
   products: ProductProps[];
@@ -19,6 +18,8 @@ interface AppContextType {
   fetchAllProducts: () => void;
   getAllCategories: () => void;
   handleCategoryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  sortCriteria: string;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -28,6 +29,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
+  const [sortCriteria, setSortCriteria] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [getCategories, setGetCategories] = useState<string[]>([]);
   const [productsInCart, setProductsInCart] = useState<ProductProps[]>([]);
@@ -43,14 +45,33 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    if (category === "") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter((product) => product.category === category)
+    let productsToFilter = [...products];
+
+    if (category !== "") {
+      productsToFilter = productsToFilter.filter(
+        (product) => product.category === category
       );
     }
-  }, [category, products]);
+    // if (sortCriteria === "Nothing selected") {
+
+    // }
+    if (sortCriteria === "Ascending") {
+      productsToFilter.sort(
+        (a, b) => parseFloat(a.price) - parseFloat(b.price)
+      );
+      setFilteredProducts(productsToFilter);
+    } else if (sortCriteria === "Descending") {
+      productsToFilter.sort(
+        (a, b) => parseFloat(b.price) - parseFloat(a.price)
+      );
+      setFilteredProducts(productsToFilter);
+    }
+  }, [category, products, sortCriteria]);
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSortCriteria(value);
+  };
 
   const fetchData = async function <T>(url: string): Promise<T> {
     const response = await fetch(url);
@@ -116,6 +137,8 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         setNumberOfProductsInCart,
         fetchAllProducts,
         getAllCategories,
+        handleSortChange,
+        sortCriteria,
       }}
     >
       {children}

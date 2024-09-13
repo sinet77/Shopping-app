@@ -5,11 +5,13 @@ import { useAppContext } from "./components/context/appContext";
 
 function App() {
   const {
+    handleSortChange,
     filteredProducts,
     category,
     getCategories,
     numberOfProductsInCart,
     handleCategoryChange,
+    sortCriteria,
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -49,6 +51,14 @@ function App() {
                 category.slice(1).toLowerCase()}
             </option>
           ))}
+        </select>
+      </div>
+      <div className={style.optionsStyle}>
+        Sorting by price:
+        <select onChange={handleSortChange} value={sortCriteria}>
+          <option value="">Nothing selected</option>
+          <option value="Ascending">Ascending</option>
+          <option value="Descending">Descending</option>
         </select>
       </div>
       <div className={style.main}>
