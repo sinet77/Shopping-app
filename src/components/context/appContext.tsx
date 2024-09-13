@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ProductProps } from "./components/Product/ProductTypes.ts";
+import { ProductProps } from "./components/Product/ProductTypes";
+import { useNavigate } from "react-router-dom";
 
 interface AppContextType {
   products: ProductProps[];

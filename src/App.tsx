@@ -1,5 +1,4 @@
 import Product from "./components/Product/Product";
-import { ProductProps } from "./components/Product/ProductTypes";
 import style from "./App.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "./components/context/appContext";
@@ -19,6 +18,12 @@ function App() {
     navigate("/cart");
   };
 
+  const handleCategoryPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategory = event.target.value;
+    navigate(`/${selectedCategory}`);
+    handleCategoryChange(event);
+  };
+
   return (
     <div className={style.background}>
       <div className={style.headline}>
@@ -36,7 +41,7 @@ function App() {
       </div>
       <div className={style.optionsStyle}>
         Choose category:
-        <select onChange={handleCategoryChange} value={category}>
+        <select onChange={handleCategoryPath} value={category}>
           <option value="">All categories</option>
           {getCategories.map((category) => (
             <option key={category} value={category}>
