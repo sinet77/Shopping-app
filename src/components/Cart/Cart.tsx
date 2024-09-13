@@ -1,23 +1,19 @@
 import { ProductProps } from "./components/Product/ProductTypes";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import style from "./Cart.module.css";
 import { useEffect, useState } from "react";
+import { useAppContext } from "../context/appContext";
 
 export default function Cart() {
-  const location = useLocation();
-  const initialProductsInCart: ProductProps[] =
-    location.state?.productsInCart || [];
-
-  const [productsInCart, setProductsInCart] = useState<ProductProps[]>(
-    initialProductsInCart
-  );
+  const { productsInCart, setProductsInCart, setNumberOfProductsInCart } =
+    useAppContext();
 
   const [togetherPrice, setTogetherPrice] = useState<number>(0);
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
     [key: number]: number;
   }>(() => {
     const startingQuantities: { [key: number]: number } = {};
-    initialProductsInCart.forEach((product) => {
+    productsInCart.forEach((product) => {
       startingQuantities[product.id] = 1;
     });
     return startingQuantities;
@@ -39,16 +35,17 @@ export default function Cart() {
 
   function handleRemoveButton(id: number) {
     setProductsInCart((prev) => prev.filter((product) => product.id !== id));
+    setNumberOfProductsInCart((prev) => (prev > 0 ? prev - 1 : 0));
   }
 
   function handleInputValue(
     e: React.ChangeEvent<HTMLInputElement>,
     id: number
   ) {
-    const quantity = e.target.value;
+    const quantity = +e.target.value;
     setPriceWithQuantity((prev) => ({
       ...prev,
-      [id]: quantity === "" ? "" : Number(quantity),
+      [id]: quantity,
     }));
   }
 
