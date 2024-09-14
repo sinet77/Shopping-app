@@ -8,16 +8,16 @@ import { AppContextProvider } from "./components/context/appContext.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/products",
+    element: <App />,
+  },
+  {
+    path: "/products/:category",
     element: <App />,
   },
   {
     path: "/cart",
     element: <Cart />,
-  },
-  {
-    path: "/:category",
-    element: <App />,
   },
   { path: "*", element: <>Nie ma takiej strony. </> },
 ]);

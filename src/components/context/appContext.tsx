@@ -16,10 +16,13 @@ interface AppContextType {
   setProductsInCart: (products: ProductProps[]) => void;
   handleAddToCart: (product: ProductProps) => void;
   fetchAllProducts: () => void;
+  fetchProductsByCategory: (category: string) => void;
   getAllCategories: () => void;
   handleCategoryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   handleSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   sortCriteria: string;
+  loading: boolean;
+  setLoading: (state: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -39,61 +42,67 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
     ProductProps[]
   >([]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
-    fetchAllProducts();
-    getAllCategories();
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchAllProducts(), getAllCategories()]);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    let productsToFilter = [...products];
-
-    if (category !== "") {
-      productsToFilter = productsToFilter.filter(
-        (product) => product.category === category
-      );
+  const fetchAllProducts = async () => {
+    setLoading(true);
+    try {
+      const data = await fetch("https://fakestoreapi.com/products");
+      const result = await data.json();
+      setProducts(result);
+      setFilteredProducts(result);
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
-    // if (sortCriteria === "Nothing selected") {
+    setLoading(false);
+  };
 
-    // }
-    if (sortCriteria === "Ascending") {
-      productsToFilter.sort(
-        (a, b) => parseFloat(a.price) - parseFloat(b.price)
+  const fetchProductsByCategory = async (category: string) => {
+    setLoading(true);
+    try {
+      const data = await fetch(
+        `https://fakestoreapi.com/products/category/${category}`
       );
-      setFilteredProducts(productsToFilter);
-    } else if (sortCriteria === "Descending") {
-      productsToFilter.sort(
-        (a, b) => parseFloat(b.price) - parseFloat(a.price)
-      );
-      setFilteredProducts(productsToFilter);
+      const result = await data.json();
+      setProducts(result);
+      setFilteredProducts(result);
+    } catch (error) {
+      console.error(`Error fetching products for category ${category}:`, error);
     }
-  }, [category, products, sortCriteria]);
+    setLoading(false);
+  };
+
+  const getAllCategories = async () => {
+    try {
+      const data = await fetch("https://fakestoreapi.com/products/categories");
+      const result = await data.json();
+      setGetCategories(result);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setSortCriteria(value);
-  };
 
-  const fetchData = async function <T>(url: string): Promise<T> {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  };
+    const sortedProducts = [...filteredProducts];
+    if (value === "Ascending") {
+      sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    } else if (value === "Descending") {
+      sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    }
 
-  const fetchAllProducts = async () => {
-    const data = await fetchData<ProductProps[]>(
-      "https://fakestoreapi.com/products/"
-    );
-
-    setProducts(data);
-    setFilteredProducts(data);
-  };
-
-  const getAllCategories = async () => {
-    const data = await fetchData<string[]>(
-      "https://fakestoreapi.com/products/categories"
-    );
-
-    setGetCategories(data);
+    setFilteredProducts(sortedProducts);
   };
 
   const handleCategoryChange = (
@@ -139,6 +148,9 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         getAllCategories,
         handleSortChange,
         sortCriteria,
+        loading,
+        setLoading,
+        fetchProductsByCategory,
       }}
     >
       {children}

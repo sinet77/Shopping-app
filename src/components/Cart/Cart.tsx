@@ -19,6 +19,14 @@ export default function Cart() {
     return startingQuantities;
   });
 
+  useEffect(() => {
+    localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+  }, [productsInCart]);
+
+  useEffect(() => {
+    localStorage.getItem("productsInCart");
+  }, [productsInCart]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
