@@ -18,6 +18,7 @@ export default function Product({ product }: ProductComponentProps) {
     const { id, title, price, category, description, image } = product;
 
     const [buttonName, setButtonName] = useState<string>("Add to cart");
+    const [clickCount, setClickCount] = useState<number>(0);
 
     const isFavorite = addProductToFavorites.some((item) => item.id === id);
 
@@ -29,6 +30,11 @@ export default function Product({ product }: ProductComponentProps) {
       }
     };
 
+    const handleClick = () => {
+      setClickCount((prev) => prev + 1);
+      setButtonName(`${clickCount + 1} already added`);
+      handleAddToCart(product);
+    };
     return (
       <div className={style.productBox}>
         <div className={style.favoriteContainer}>
@@ -78,8 +84,7 @@ export default function Product({ product }: ProductComponentProps) {
         <button
           className={style.button}
           onClick={() => {
-            handleAddToCart(product);
-            setButtonName("Already added");
+            handleClick();
           }}
         >
           {buttonName}
