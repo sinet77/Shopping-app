@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import style from "./Layout.module.css";
 import { useAppContext } from "../components/context/appContext";
+import { useState } from "react";
+import ModalCart from "../components/ModalCart/ModalCart";
 
 export default function ProductsLayout({
   children,
@@ -16,6 +18,8 @@ export default function ProductsLayout({
     sortCriteria,
   } = useAppContext();
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleCategoryPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -25,7 +29,11 @@ export default function ProductsLayout({
   };
 
   const handleButtonClick = () => {
-    navigate("/cart");
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   const handleFavoriteButtonClick = () => {
@@ -83,6 +91,11 @@ export default function ProductsLayout({
         </select>
       </div>
       {children}
+      <ModalCart isOpen={modalOpen} onClose={handleCloseModal}>
+        <h2>Cart</h2>
+        <p>Your cart is empty.</p>
+        <a href="/cart">Go to the cart</a>
+      </ModalCart>
     </div>
   );
 }

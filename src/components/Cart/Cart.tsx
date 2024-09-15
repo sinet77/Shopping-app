@@ -13,23 +13,24 @@ export default function Cart() {
     [key: number]: number;
   }>({});
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const initialQuantities: { [key: number]: number } = {};
-    productsInCart.forEach((product) => {
-      initialQuantities[product.id] = product.quantity || 1;
-    });
-    setPriceWithQuantity(initialQuantities);
-  }, [productsInCart]);
+    const savedProducts = localStorage.getItem("productsInCart");
+    if (savedProducts) {
+      const parsedProducts = JSON.parse(savedProducts);
+      setProductsInCart(parsedProducts);
+      const initialQuantities: { [key: number]: number } = {};
+      parsedProducts.forEach((product: ProductProps) => {
+        initialQuantities[product.id] = product.quantity || 1;
+      });
+      setPriceWithQuantity(initialQuantities);
+    }
+  }, [setProductsInCart]);
 
   useEffect(() => {
     localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
   }, [productsInCart]);
-
-  useEffect(() => {
-    localStorage.getItem("productsInCart");
-  }, [productsInCart]);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const total = productsInCart.reduce(

@@ -30,7 +30,7 @@
 
 .headtitle {
   font-weight: bold;
-  font-size: 36px;
+  font-size: 30px;
   margin-bottom: 25px;
   color: black;
 }
@@ -71,4 +71,9 @@
   color: blue;
   font-weight: bold;
   font-size: larger;
+}
+.noFavorites {
+  display: flex;
+  color: blue;
+  padding: 25px;
 }

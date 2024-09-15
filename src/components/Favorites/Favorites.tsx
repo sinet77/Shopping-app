@@ -35,7 +35,9 @@ export default function Favorites() {
           </ul>
         ))
       ) : (
-        <p>No favorite products added yet.</p>
+        <div className={style.noFavorites}>
+          <p>No favorite products added yet.</p>
+        </div>
       )}
     </div>
   );
