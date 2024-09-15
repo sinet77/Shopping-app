@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ProductProps } from "./components/Product/ProductTypes";
+import { ProductProps } from "/components/Product/ProductTypes";
 
 interface AppContextType {
   products: ProductProps[];

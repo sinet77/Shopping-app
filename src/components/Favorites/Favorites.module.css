@@ -1,0 +1,74 @@
+.favoritePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  background-color: hsl(138, 51%, 53%);
+  border-radius: 10px;
+  padding: 15px 15px 5px 15px;
+}
+.favoriteBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+  color: black;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.image {
+  height: auto;
+  max-width: 100%;
+  height: 200px;
+  padding: 15px;
+}
+
+.headtitle {
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: 25px;
+  color: black;
+}
+
+.headContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
+}
+.closeButton:hover {
+  background-color: rgba(247, 7, 7, 0.432);
+  color: black;
+  border-color: black;
+}
+.descriptionBox {
+  padding: 10px;
+}
+.title {
+  margin-top: -30px;
+  font-weight: bold;
+  font-size: larger;
+}
+.description {
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: justify;
+}
+.price {
+  color: blue;
+  font-weight: bold;
+  font-size: larger;
+}

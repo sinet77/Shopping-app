@@ -27,7 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 20px 30px;
   background-color: hsl(138, 51%, 53%);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
   color: hsl(200, 15%, 8%);
@@ -35,6 +35,10 @@
 
 .headTitle {
   font-size: 25px;
+}
+.buttonContainer {
+  display: flex;
+  gap: 30px;
 }
 
 .cartIcon {
@@ -47,13 +51,43 @@
   align-items: center;
   background-color: white;
   border-color: black;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .cartButton:hover {
   border: 1px solid green;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
+.buttonsContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.favoritesButton {
+  background-color: #ff6f61;
+  color: #0c0202;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favoritesButton:hover {
+  background-color: #e64a19;
+  transform: scale(1.1);
+}
+.favoritesIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #fff;
+}
 .numberOfProductsInCart {
   display: flex;
   justify-content: center;

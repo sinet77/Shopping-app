@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { AppContextProvider } from "./components/context/appContext.tsx";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory.tsx";
+import Favorites from "./components/Favorites/Favorites.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/favorites",
+    element: <Favorites />,
   },
   { path: "*", element: <>Nie ma takiej strony. </> },
 ]);
