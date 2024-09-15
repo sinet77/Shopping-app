@@ -2,18 +2,28 @@ import Cart from "./components/Cart/Cart.tsx";
 import App from "./App.tsx";
 import "./index.css";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import React from "react";
 import { AppContextProvider } from "./components/context/appContext.tsx";
+import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory.tsx";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigate to="/products" />,
+  },
+
   {
     path: "/products",
     element: <App />,
   },
   {
     path: "/products/:category",
-    element: <App />,
+    element: <ProductsByCategory />,
   },
   {
     path: "/cart",

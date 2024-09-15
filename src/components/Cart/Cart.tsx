@@ -11,13 +11,15 @@ export default function Cart() {
   const [togetherPrice, setTogetherPrice] = useState<number>(0);
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
     [key: number]: number;
-  }>(() => {
-    const startingQuantities: { [key: number]: number } = {};
+  }>({});
+
+  useEffect(() => {
+    const initialQuantities: { [key: number]: number } = {};
     productsInCart.forEach((product) => {
-      startingQuantities[product.id] = 1;
+      initialQuantities[product.id] = product.quantity || 1;
     });
-    return startingQuantities;
-  });
+    setPriceWithQuantity(initialQuantities);
+  }, [productsInCart]);
 
   useEffect(() => {
     localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
@@ -31,11 +33,11 @@ export default function Cart() {
 
   useEffect(() => {
     const total = productsInCart.reduce(
-      (sum, product) => sum + product.price * priceWithQuantity[product.id],
+      (sum, product) => sum + product.price * product.quantity,
       0
     );
     setTogetherPrice(total);
-  }, [productsInCart, priceWithQuantity]);
+  }, [productsInCart]);
 
   function handleCloseButton() {
     navigate("/");
@@ -55,6 +57,11 @@ export default function Cart() {
       ...prev,
       [id]: quantity,
     }));
+    setProductsInCart((prev) =>
+      prev.map((product) =>
+        product.id === id ? { ...product, quantity: quantity } : product
+      )
+    );
   }
 
   return (

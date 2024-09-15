@@ -113,8 +113,20 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const handleAddToCart = (product: ProductProps) => {
+    const existingProduct = productsInCart.find(
+      (item) => item.id === product.id
+    );
+
+    if (existingProduct) {
+      const updatedCart = productsInCart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setProductsInCart(updatedCart);
+    } else {
+      setProductsInCart([...productsInCart, { ...product, quantity: 1 }]);
+    }
+
     setNumberOfProductsInCart((prev) => prev + 1);
-    setProductsInCart((prev) => [...prev, product]);
   };
 
   const addFavorite = (product: ProductProps) => {

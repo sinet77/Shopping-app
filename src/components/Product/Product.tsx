@@ -1,6 +1,7 @@
 import { ProductProps } from "./ProductTypes";
 import style from "./Product.module.css";
 import { useAppContext } from "../context/appContext";
+import { useState } from "react";
 
 interface ProductComponentProps {
   product: ProductProps;
@@ -15,6 +16,8 @@ export default function Product({ product }: ProductComponentProps) {
   } = useAppContext();
   {
     const { id, title, price, category, description, image } = product;
+
+    const [buttonName, setButtonName] = useState<string>("Add to cart");
 
     const isFavorite = addProductToFavorites.some((item) => item.id === id);
 
@@ -74,9 +77,12 @@ export default function Product({ product }: ProductComponentProps) {
 
         <button
           className={style.button}
-          onClick={() => handleAddToCart(product)}
+          onClick={() => {
+            handleAddToCart(product);
+            setButtonName("Already added");
+          }}
         >
-          Add to cart
+          {buttonName}
         </button>
       </div>
     );
