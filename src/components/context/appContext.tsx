@@ -2,8 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ProductProps } from "/components/Product/ProductTypes";
 
 interface AppContextType {
-  products: ProductProps[];
-  filteredProducts: ProductProps[];
   category: string;
   getCategories: string[];
   productsInCart: ProductProps[];
@@ -15,14 +13,12 @@ interface AppContextType {
   setCategory: (category: string) => void;
   setProductsInCart: (products: ProductProps[]) => void;
   handleAddToCart: (product: ProductProps) => void;
-  fetchAllProducts: () => void;
-  fetchProductsByCategory: (category: string) => void;
   getAllCategories: () => void;
   handleCategoryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   handleSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   sortCriteria: string;
-  loading: boolean;
-  setLoading: (state: boolean) => void;
+  filteredProducts: ProductProps[];
+  setFilteredProducts: (product: ProductProps) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -30,8 +26,6 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [products, setProducts] = useState<ProductProps[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
   const [sortCriteria, setSortCriteria] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [getCategories, setGetCategories] = useState<string[]>([]);
@@ -41,45 +35,14 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [addProductToFavorites, setAddProductToFavorites] = useState<
     ProductProps[]
   >([]);
-
-  const [loading, setLoading] = useState<boolean>(false);
+  const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      await Promise.all([fetchAllProducts(), getAllCategories()]);
-      setLoading(false);
+      await getAllCategories();
     };
     fetchData();
   }, []);
-
-  const fetchAllProducts = async () => {
-    setLoading(true);
-    try {
-      const data = await fetch("https://fakestoreapi.com/products");
-      const result = await data.json();
-      setProducts(result);
-      setFilteredProducts(result);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-    setLoading(false);
-  };
-
-  const fetchProductsByCategory = async (category: string) => {
-    setLoading(true);
-    try {
-      const data = await fetch(
-        `https://fakestoreapi.com/products/category/${category}`
-      );
-      const result = await data.json();
-      setProducts(result);
-      setFilteredProducts(result);
-    } catch (error) {
-      console.error(`Error fetching products for category ${category}:`, error);
-    }
-    setLoading(false);
-  };
 
   const getAllCategories = async () => {
     try {
@@ -94,15 +57,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setSortCriteria(value);
-
-    const sortedProducts = [...filteredProducts];
-    if (value === "Ascending") {
-      sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    } else if (value === "Descending") {
-      sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-    }
-
-    setFilteredProducts(sortedProducts);
   };
 
   const handleCategoryChange = (
@@ -142,8 +96,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AppContext.Provider
       value={{
-        products,
-        filteredProducts,
         category,
         getCategories,
         productsInCart,
@@ -156,13 +108,11 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         setCategory,
         handleAddToCart,
         setNumberOfProductsInCart,
-        fetchAllProducts,
         getAllCategories,
         handleSortChange,
         sortCriteria,
-        loading,
-        setLoading,
-        fetchProductsByCategory,
+        filteredProducts,
+        setFilteredProducts,
       }}
     >
       {children}

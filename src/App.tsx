@@ -2,21 +2,12 @@ import Product from "./components/Product/Product";
 import { useAppContext } from "./components/context/appContext";
 import Layout from "./Layout/Layout";
 import style from "./App.module.css";
+import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 
 function App() {
-  const { filteredProducts, loading } = useAppContext();
-
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
   return (
     <Layout>
-      <div className={style.main}>
-        {filteredProducts.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
-      </div>
+      <ProductsByCategory />
     </Layout>
   );
 }

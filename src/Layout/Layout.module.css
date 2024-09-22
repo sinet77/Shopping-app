@@ -109,3 +109,32 @@
   color: black;
   gap: 10px;
 }
+
+.productImage {
+  height: 110px;
+}
+.productItem {
+  display: flex;
+  align-items: center;
+  background-color: #99d49b;
+  gap: 20px;
+  border-radius: 10px;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+.Configuration {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: black;
+}
+.CloseButton:hover {
+  background-color: red;
+  border: 2px solid black;
+}
+.GoToCartButton:hover {
+  background-color: rgb(78, 160, 133);
+  border: 2px solid black;
+  color: black;
+}

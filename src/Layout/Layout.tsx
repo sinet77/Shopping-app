@@ -1,14 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import style from "./Layout.module.css";
 import { useAppContext } from "../components/context/appContext";
 import { useState } from "react";
 import ModalCart from "../components/ModalCart/ModalCart";
 
-export default function ProductsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ProductsLayout() {
   const {
     category,
     getCategories,
@@ -16,6 +12,7 @@ export default function ProductsLayout({
     handleCategoryChange,
     handleSortChange,
     sortCriteria,
+    productsInCart,
   } = useAppContext();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -90,12 +87,45 @@ export default function ProductsLayout({
           <option value="Descending">Descending</option>
         </select>
       </div>
-      {children}
-      <ModalCart isOpen={modalOpen} onClose={handleCloseModal}>
-        <h2>Cart</h2>
-        <p>Your cart is empty.</p>
-        <a href="/cart">Go to the cart</a>
-      </ModalCart>
+
+      <Outlet />
+
+      {modalOpen && (
+        <ModalCart isOpen={modalOpen} onClose={handleCloseModal}>
+          <div className={style.Configuration}>
+            {productsInCart.length > 0 ? (
+              <>
+                <h3>Your added products:</h3>
+                {productsInCart.map((product) => (
+                  <div key={product.id} className={style.productItem}>
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className={style.productImage}
+                    />
+                    <h4 className={style.productTitle}>{product.title}</h4>
+                    <p>Quantity: {product.quantity}</p>
+                  </div>
+                ))}
+                <button
+                  className={style.GoToCartButton}
+                  onClick={() => {
+                    handleCloseModal();
+                    navigate("/cart");
+                  }}
+                >
+                  Go to the cart
+                </button>
+              </>
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
+            <button className={style.CloseButton} onClick={handleCloseModal}>
+              Close
+            </button>
+          </div>
+        </ModalCart>
+      )}
     </div>
   );
 }

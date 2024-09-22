@@ -11,11 +11,11 @@
 }
 
 .modalContent {
-  background: rgb(146, 129, 129);
+  background: rgb(57, 145, 68);
   padding: 15px;
   border-radius: 8px;
   width: 80%;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
 }
 
@@ -24,5 +24,10 @@
   top: 10px;
   right: 10px;
   cursor: pointer;
-  color: black;
+  padding: 10px;
+}
+
+.closeButton:hover {
+  transform: scale(1.2);
+  background-color: red;
 }

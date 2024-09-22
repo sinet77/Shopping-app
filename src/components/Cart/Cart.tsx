@@ -16,23 +16,13 @@ export default function Cart() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedProducts = localStorage.getItem("productsInCart");
-    if (savedProducts) {
-      const parsedProducts = JSON.parse(savedProducts);
-      setProductsInCart(parsedProducts);
-      const initialQuantities: { [key: number]: number } = {};
-      parsedProducts.forEach((product: ProductProps) => {
-        initialQuantities[product.id] = product.quantity || 1;
-      });
-      setPriceWithQuantity(initialQuantities);
-    }
-  }, [setProductsInCart]);
+    const initialQuantities = productsInCart.reduce((acumulator, product) => {
+      acumulator[product.id] = product.quantity;
+      return acumulator;
+    }, {} as { [key: number]: number });
 
-  useEffect(() => {
-    localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
-  }, [productsInCart]);
+    setPriceWithQuantity(initialQuantities);
 
-  useEffect(() => {
     const total = productsInCart.reduce(
       (sum, product) => sum + product.price * product.quantity,
       0
@@ -45,8 +35,16 @@ export default function Cart() {
   }
 
   function handleRemoveButton(id: number) {
-    setProductsInCart((prev) => prev.filter((product) => product.id !== id));
-    setNumberOfProductsInCart((prev) => (prev > 0 ? prev - 1 : 0));
+    setProductsInCart((prev) => {
+      const productToRemove = prev.find((product) => product.id === id);
+      const newCart = prev.filter((product) => product.id !== id);
+
+      setNumberOfProductsInCart(
+        (prevCount) => prevCount - (productToRemove.quantity || 0)
+      );
+
+      return newCart;
+    });
   }
 
   function handleInputValue(
