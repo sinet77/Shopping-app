@@ -3,14 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-.main {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 30px;
-  margin-top: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
 
 .background {
   background-color: hsl(0, 0%, 98%);

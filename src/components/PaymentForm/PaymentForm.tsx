@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import style from "./PaymentForm.module.css";
 import { PaymentSchema } from "../../schemas/ValidationSchema";
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = () => {
   const formik = useFormik({
@@ -16,10 +17,16 @@ const PaymentForm = () => {
       cvv: "",
     },
     validationSchema: PaymentSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: () => {
+      handlePurchaseButton();
     },
   });
+
+  const navigate = useNavigate();
+
+  const handlePurchaseButton = () => {
+    navigate("/purchase-done");
+  };
 
   return (
     <form className={style.form} onSubmit={formik.handleSubmit}>

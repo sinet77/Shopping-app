@@ -1,5 +1,4 @@
 import Cart from "./components/Cart/Cart.tsx";
-import App from "./App.tsx";
 import "./index.css";
 import ReactDOM from "react-dom/client";
 import {
@@ -13,6 +12,7 @@ import ProductsByCategory from "./components/ProductsByCategory/ProductsByCatego
 import Favorites from "./components/Favorites/Favorites.tsx";
 import ProductsLayout from "./Layout/Layout.tsx";
 import PaymentForm from "./components/PaymentForm/PaymentForm.tsx";
+import Successful from "./components/ModalSuccessful/Successful.tsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +45,8 @@ const router = createBrowserRouter([
     path: "/cart/payment",
     element: <PaymentForm />,
   },
+  { path: "/purchase-done", element: <Successful /> },
+
   { path: "*", element: <>There is no such page. </> },
 ]);
 
