@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import style from "./Cart.module.css";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
+import PaymentForm from "../PaymentForm/PaymentForm";
 
 export default function Cart() {
   const { productsInCart, setProductsInCart, setNumberOfProductsInCart } =
@@ -12,6 +13,8 @@ export default function Cart() {
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
     [key: number]: number;
   }>({});
+
+  const [showPaymentForm, setShowPaymentForm] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -63,6 +66,15 @@ export default function Cart() {
     );
   }
 
+  function handleShowPaymentForm() {
+    if (productsInCart.length > 0) {
+      setShowPaymentForm(true);
+      navigate("payment");
+    } else {
+      setShowPaymentForm(false);
+    }
+  }
+
   return (
     <div className={style.cartContainer}>
       <div className={style.headContainer}>
@@ -106,6 +118,7 @@ export default function Cart() {
       </div>
       <div className={style.totalPrice}>
         Price together: ${togetherPrice.toFixed(2)}
+        <button onClick={handleShowPaymentForm}>Payment</button>
       </div>
     </div>
   );

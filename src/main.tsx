@@ -12,6 +12,7 @@ import { AppContextProvider } from "./components/context/appContext.tsx";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory.tsx";
 import Favorites from "./components/Favorites/Favorites.tsx";
 import ProductsLayout from "./Layout/Layout.tsx";
+import PaymentForm from "./components/PaymentForm/PaymentForm.tsx";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
     path: "/favorites",
     element: <Favorites />,
   },
-  { path: "*", element: <>Nie ma takiej strony. </> },
+  {
+    path: "/cart/payment",
+    element: <PaymentForm />,
+  },
+  { path: "*", element: <>There is no such page. </> },
 ]);
 
 const rootElement = document.getElementById("root");
