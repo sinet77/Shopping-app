@@ -24,8 +24,7 @@
 .image {
   height: auto;
   max-width: 100%;
-  height: 200px;
-  padding: 15px;
+  padding-left: 10px;
 }
 
 .headtitle {
@@ -73,6 +72,9 @@
   font-size: larger;
 }
 .noFavorites {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: flex;
   color: blue;
   padding: 25px;
