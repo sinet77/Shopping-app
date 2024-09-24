@@ -5,4 +5,5 @@ export interface ProductProps {
   category: string;
   description: string;
   image: string;
+  quantity: number;
 }

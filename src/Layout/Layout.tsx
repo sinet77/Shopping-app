@@ -1,14 +1,69 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  RouteObject,
+  useNavigate,
+  useRoutes,
+} from "react-router-dom";
 import style from "./Layout.module.css";
 import { useAppContext } from "../components/context/appContext";
 import { useState } from "react";
 import ModalCart from "../components/ModalCart/ModalCart";
+import ProductsByCategory from "../components/ProductsByCategory/ProductsByCategory";
+import Cart from "../components/Cart/Cart";
+import Favorites from "../components/Favorites/Favorites";
+import Successful from "../components/ModalSuccessful/Successful";
+import PaymentForm from "../components/PaymentForm/PaymentForm";
+
+/*
+  / -> main page -> wyswietlal produkty
+  /products/:category -> wyswietlal produkty z danej kategorii, jezeli nie bedzie kategory to wszystkie
+  
+  /products 
+  /products/electronics
+
+*/
+
+const router: RouteObject[] = [
+  {
+    path: "/",
+    element: <Navigate to="/products" />,
+  },
+  {
+    path: "/products",
+    element: <ProductsByCategory />,
+    children: [
+      {
+        path: "",
+        element: <ProductsByCategory />,
+      },
+      {
+        path: ":category",
+        element: <ProductsByCategory />,
+      },
+    ],
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
+  },
+  {
+    path: "/favorites",
+    element: <Favorites />,
+  },
+  {
+    path: "/cart/payment",
+    element: <PaymentForm />,
+  },
+  { path: "/purchase-done", element: <Successful /> },
+
+  { path: "*", element: <>There is no such page. </> },
+];
 
 export default function ProductsLayout() {
   const {
     category,
     getCategories,
-    numberOfProductsInCart,
+    // numberOfProductsInCart,
     handleCategoryChange,
     handleSortChange,
     sortCriteria,
@@ -18,6 +73,8 @@ export default function ProductsLayout() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const routes = useRoutes(router);
 
   const handleCategoryPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCategory = event.target.value;
@@ -36,6 +93,15 @@ export default function ProductsLayout() {
   const handleFavoriteButtonClick = () => {
     navigate("/favorites");
   };
+
+  // Toroba {quantity: 1,}
+  // Bluze {quantity:2}
+  // numberOfProductsInCart -> 3
+  // productsInCart = [{quantity: 1}, {quantity:2}]
+  const numberOfProductsInCart = productsInCart.reduce(
+    (sum, product) => sum + product.quantity,
+    0
+  );
 
   return (
     <div className={style.background}>
@@ -88,7 +154,10 @@ export default function ProductsLayout() {
         </select>
       </div>
 
-      <Outlet />
+      <div className={style.Routes}>
+        {/* dodaj width 100% */}
+        {routes}
+      </div>
 
       {modalOpen && (
         <ModalCart isOpen={modalOpen} onClose={handleCloseModal}>

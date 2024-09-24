@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import style from "/src/App.module.css";
+import style from "./ProductsByCategory.module.css";
 import Product from "../Product/Product";
-import { ProductProps } from "/components/Product/ProductTypes";
 import { useAppContext } from "../context/appContext";
+import { ProductProps } from "../Product/ProductTypes";
 
 export default function ProductsPage() {
   const { category: urlCategory } = useParams<{ category: string }>();
@@ -57,15 +57,17 @@ export default function ProductsPage() {
     fetchProducts();
   }, [urlCategory]);
 
+  console.log("loading", loading);
+
   if (loading) {
-    return <p>Loading products...</p>;
+    return <div className={style.Loading}>Loading products...</div>;
   }
 
   const sortedProducts = [...products];
   if (sortCriteria === "Ascending") {
-    sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    sortedProducts.sort((a, b) => a.price - b.price);
   } else if (sortCriteria === "Descending") {
-    sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    sortedProducts.sort((a, b) => b.price - a.price);
   }
 
   return (

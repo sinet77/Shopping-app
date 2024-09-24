@@ -1,4 +1,4 @@
-import { ProductProps } from "./components/Product/ProductTypes";
+import { ProductProps } from "../Product/ProductTypes";
 import { useNavigate } from "react-router-dom";
 import style from "./Cart.module.css";
 import { useEffect, useState } from "react";
@@ -6,8 +6,7 @@ import { useAppContext } from "../context/appContext";
 import PaymentForm from "../PaymentForm/PaymentForm";
 
 export default function Cart() {
-  const { productsInCart, setProductsInCart, setNumberOfProductsInCart } =
-    useAppContext();
+  const { productsInCart, setProductsInCart } = useAppContext();
 
   const [togetherPrice, setTogetherPrice] = useState<number>(0);
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
@@ -38,16 +37,20 @@ export default function Cart() {
   }
 
   function handleRemoveButton(id: number) {
-    setProductsInCart((prev) => {
-      const productToRemove = prev.find((product) => product.id === id);
-      const newCart = prev.filter((product) => product.id !== id);
+    const newCart = productsInCart.filter((product) => product.id !== id);
 
-      setNumberOfProductsInCart(
-        (prevCount) => prevCount - (productToRemove.quantity || 0)
-      );
+    setProductsInCart(newCart);
 
-      return newCart;
-    });
+    // setProductsInCart((prev) => {
+    //   const productToRemove = prev.find((product) => product.id === id);
+    //   const newCart = prev.filter((product) => product.id !== id);
+
+    //   setNumberOfProductsInCart(
+    //     (prevCount) => prevCount - (productToRemove.quantity || 0)
+    //   );
+
+    //   return newCart;
+    // });
   }
 
   function handleInputValue(
@@ -59,11 +62,11 @@ export default function Cart() {
       ...prev,
       [id]: quantity,
     }));
-    setProductsInCart((prev) =>
-      prev.map((product) =>
-        product.id === id ? { ...product, quantity: quantity } : product
-      )
+
+    const newProductsInCart = productsInCart.map((product) =>
+      product.id === id ? { ...product, quantity: quantity } : product
     );
+    setProductsInCart(newProductsInCart);
   }
 
   function handleShowPaymentForm() {

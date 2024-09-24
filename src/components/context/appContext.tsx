@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ProductProps } from "/components/Product/ProductTypes";
+import { ProductProps } from "../Product/ProductTypes";
 
 interface AppContextType {
   category: string;
   getCategories: string[];
   productsInCart: ProductProps[];
-  numberOfProductsInCart: number;
-  setNumberOfProductsInCart: (n: number) => void;
   addProductToFavorites: ProductProps[];
   addFavorite: (product: ProductProps) => void;
   removeFavorite: (productId: number) => void;
@@ -18,7 +16,7 @@ interface AppContextType {
   handleSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   sortCriteria: string;
   filteredProducts: ProductProps[];
-  setFilteredProducts: (product: ProductProps) => void;
+  setFilteredProducts: (product: ProductProps[]) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -30,8 +28,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [category, setCategory] = useState<string>("");
   const [getCategories, setGetCategories] = useState<string[]>([]);
   const [productsInCart, setProductsInCart] = useState<ProductProps[]>([]);
-  const [numberOfProductsInCart, setNumberOfProductsInCart] =
-    useState<number>(0);
+
   const [addProductToFavorites, setAddProductToFavorites] = useState<
     ProductProps[]
   >([]);
@@ -79,8 +76,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setProductsInCart([...productsInCart, { ...product, quantity: 1 }]);
     }
-
-    setNumberOfProductsInCart((prev) => prev + 1);
   };
 
   const addFavorite = (product: ProductProps) => {
@@ -99,7 +94,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         category,
         getCategories,
         productsInCart,
-        numberOfProductsInCart,
         addProductToFavorites,
         setProductsInCart,
         handleCategoryChange,
@@ -107,7 +101,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         removeFavorite,
         setCategory,
         handleAddToCart,
-        setNumberOfProductsInCart,
         getAllCategories,
         handleSortChange,
         sortCriteria,
