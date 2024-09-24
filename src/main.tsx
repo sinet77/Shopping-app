@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import { AppContextProvider } from "./components/context/appContext.tsx";
-
 import ProductsLayout from "./Layout/Layout.tsx";
 
 const rootElement = document.getElementById("root");
