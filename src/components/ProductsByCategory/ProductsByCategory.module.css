@@ -18,3 +18,11 @@
   margin-top: 100px;
   text-align: center;
 }
+.optionsStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: black;
+  gap: 10px;
+}

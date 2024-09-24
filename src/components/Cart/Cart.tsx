@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import style from "./Cart.module.css";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
-import PaymentForm from "../PaymentForm/PaymentForm";
 
 export default function Cart() {
   const { productsInCart, setProductsInCart } = useAppContext();
@@ -12,8 +11,6 @@ export default function Cart() {
   const [priceWithQuantity, setPriceWithQuantity] = useState<{
     [key: number]: number;
   }>({});
-
-  const [showPaymentForm, setShowPaymentForm] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -40,17 +37,6 @@ export default function Cart() {
     const newCart = productsInCart.filter((product) => product.id !== id);
 
     setProductsInCart(newCart);
-
-    // setProductsInCart((prev) => {
-    //   const productToRemove = prev.find((product) => product.id === id);
-    //   const newCart = prev.filter((product) => product.id !== id);
-
-    //   setNumberOfProductsInCart(
-    //     (prevCount) => prevCount - (productToRemove.quantity || 0)
-    //   );
-
-    //   return newCart;
-    // });
   }
 
   function handleInputValue(
@@ -71,10 +57,7 @@ export default function Cart() {
 
   function handleShowPaymentForm() {
     if (productsInCart.length > 0) {
-      setShowPaymentForm(true);
       navigate("payment");
-    } else {
-      setShowPaymentForm(false);
     }
   }
 

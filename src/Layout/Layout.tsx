@@ -60,27 +60,13 @@ const router: RouteObject[] = [
 ];
 
 export default function ProductsLayout() {
-  const {
-    category,
-    getCategories,
-    // numberOfProductsInCart,
-    handleCategoryChange,
-    handleSortChange,
-    sortCriteria,
-    productsInCart,
-  } = useAppContext();
+  const { productsInCart } = useAppContext();
 
   const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const routes = useRoutes(router);
-
-  const handleCategoryPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = event.target.value;
-    handleCategoryChange(event);
-    navigate(`/products/${selectedCategory}`);
-  };
 
   const handleButtonClick = () => {
     setModalOpen(true);
@@ -94,10 +80,6 @@ export default function ProductsLayout() {
     navigate("/favorites");
   };
 
-  // Toroba {quantity: 1,}
-  // Bluze {quantity:2}
-  // numberOfProductsInCart -> 3
-  // productsInCart = [{quantity: 1}, {quantity:2}]
   const numberOfProductsInCart = productsInCart.reduce(
     (sum, product) => sum + product.quantity,
     0
@@ -132,26 +114,6 @@ export default function ProductsLayout() {
             </div>
           </button>
         </div>
-      </div>
-      <div className={style.optionsStyle}>
-        Choose category:
-        <select onChange={handleCategoryPath} value={category}>
-          <option value="">All categories</option>
-          {getCategories.map((category) => (
-            <option key={category} value={category}>
-              {category.charAt(0).toUpperCase() +
-                category.slice(1).toLowerCase()}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className={style.optionsStyle}>
-        Sorting by price:
-        <select onChange={handleSortChange} value={sortCriteria}>
-          <option value="">Nothing selected</option>
-          <option value="Ascending">Ascending</option>
-          <option value="Descending">Descending</option>
-        </select>
       </div>
 
       <div className={style.Routes}>

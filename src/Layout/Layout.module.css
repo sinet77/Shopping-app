@@ -6,7 +6,11 @@
 
 .background {
   background-color: hsl(0, 0%, 98%);
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  height: 100vh;
   width: 100%;
 }
 
@@ -138,5 +142,4 @@
   display: flex;
   width: 100%;
   padding: 20px;
-  flex-grow: 1;
 }

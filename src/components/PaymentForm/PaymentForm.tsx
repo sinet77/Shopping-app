@@ -28,6 +28,10 @@ const PaymentForm = () => {
     navigate("/purchase-done");
   };
 
+  const handleGoBackButton = () => {
+    navigate("/cart");
+  };
+
   return (
     <form className={style.form} onSubmit={formik.handleSubmit}>
       <div>
@@ -208,6 +212,9 @@ const PaymentForm = () => {
         </div>
       </div>
 
+      <button className={style.backButton} onClick={handleGoBackButton}>
+        Go back to cart
+      </button>
       <button className={style.button} type="submit">
         Purchase
       </button>

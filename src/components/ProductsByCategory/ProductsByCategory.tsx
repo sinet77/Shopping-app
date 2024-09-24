@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import style from "./ProductsByCategory.module.css";
 import Product from "../Product/Product";
@@ -7,10 +7,24 @@ import { ProductProps } from "../Product/ProductTypes";
 
 export default function ProductsPage() {
   const { category: urlCategory } = useParams<{ category: string }>();
-  const { sortCriteria, setFilteredProducts } = useAppContext();
-
+  const {
+    setFilteredProducts,
+    category,
+    getCategories,
+    sortCriteria,
+    handleSortChange,
+    handleCategoryChange,
+  } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<ProductProps[]>([]);
+
+  const navigate = useNavigate();
+
+  const handleCategoryPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategory = event.target.value;
+    handleCategoryChange(event);
+    navigate(`/products/${selectedCategory}`);
+  };
 
   const fetchProductsByCategory = async (category: string) => {
     setLoading(true);
@@ -71,14 +85,36 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className={style.main}>
-      {sortedProducts.length > 0 ? (
-        sortedProducts.map((product) => (
-          <Product key={product.id} product={product} />
-        ))
-      ) : (
-        <p>No products available</p>
-      )}
+    <div className={style.container}>
+      <div className={style.optionsStyle}>
+        Choose category:
+        <select onChange={handleCategoryPath} value={category}>
+          <option value="">All categories</option>
+          {getCategories.map((category) => (
+            <option key={category} value={category}>
+              {category.charAt(0).toUpperCase() +
+                category.slice(1).toLowerCase()}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={style.optionsStyle}>
+        Sorting by price:
+        <select onChange={handleSortChange} value={sortCriteria}>
+          <option value="">Nothing selected</option>
+          <option value="Ascending">Ascending</option>
+          <option value="Descending">Descending</option>
+        </select>
+      </div>
+      <div className={style.main}>
+        {sortedProducts.length > 0 ? (
+          sortedProducts.map((product) => (
+            <Product key={product.id} product={product} />
+          ))
+        ) : (
+          <p>No products available</p>
+        )}
+      </div>
     </div>
   );
 }
