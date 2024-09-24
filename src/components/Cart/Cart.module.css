@@ -1,16 +1,8 @@
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  padding: 30px;
-}
-
 .cartContainer {
   padding: 30px;
   background-color: #f0f0f0;
   border-radius: 5px;
+  border: 3px solid black;
 }
 
 .productItem {

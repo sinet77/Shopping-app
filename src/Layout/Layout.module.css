@@ -3,6 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+} */
 
 .background {
   background-color: hsl(0, 0%, 98%);
@@ -10,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
+  width: 100%;
 }
 
 .app {
@@ -108,7 +115,7 @@
 }
 
 .productImage {
-  height: 110px;
+  height: 130px;
 }
 .productItem {
   display: flex;
@@ -138,6 +145,9 @@
 
 .Routes {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 20px;
 }
