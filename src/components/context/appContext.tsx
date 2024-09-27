@@ -41,6 +41,26 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (productsInCart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(productsInCart));
+    }
+    if (addProductToFavorites.length > 0) {
+      localStorage.setItem("favorites", JSON.stringify(addProductToFavorites));
+    }
+  }, [productsInCart, addProductToFavorites]);
+
+  useEffect(() => {
+    const savedProductsInCart = localStorage.getItem("cart");
+    const savedFavorites = localStorage.getItem("favorites");
+    if (savedProductsInCart) {
+      setProductsInCart(JSON.parse(savedProductsInCart));
+    }
+    if (savedFavorites) {
+      setAddProductToFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
+
   const getAllCategories = async () => {
     try {
       const data = await fetch("https://fakestoreapi.com/products/categories");
