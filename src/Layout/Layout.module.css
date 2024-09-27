@@ -15,6 +15,18 @@
   padding-top: 100px;
 }
 
+.MainCartImage {
+  height: auto;
+  max-height: 70px;
+  width: auto;
+}
+.IconAndTitleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
 .headline {
   display: flex;
   justify-content: space-between;

@@ -88,7 +88,14 @@ export default function ProductsLayout() {
   return (
     <div className={style.background}>
       <div className={style.headline}>
-        <h1 className={style.headTitle}>Shopping center</h1>
+        <div className={style.IconAndTitleContainer}>
+          <img
+            className={style.MainCartImage}
+            src="/public/shopping-cart.png"
+          ></img>
+          <h1 className={style.headTitle}>Shopping center</h1>
+        </div>
+
         <div className={style.buttonContainer}>
           <button
             className={style.favoritesButton}
