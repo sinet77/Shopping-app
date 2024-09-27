@@ -3,26 +3,16 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-} */
 
 .background {
   background-color: hsl(0, 0%, 98%);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 100px;
 }
 
 .headline {
@@ -34,7 +24,11 @@
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
   color: hsl(200, 15%, 8%);
   width: 100%;
+  height: 100px;
   box-sizing: border-box;
+  z-index: 100;
+  position: fixed;
+  top: 0;
 }
 
 .headTitle {
@@ -150,4 +144,5 @@
   align-items: center;
   width: 100%;
   padding: 20px;
+  flex-grow: 1;
 }
