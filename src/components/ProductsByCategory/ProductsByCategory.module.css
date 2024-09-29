@@ -26,3 +26,17 @@
   color: black;
   gap: 10px;
 }
+
+@media (max-width: 480px) {
+  .main {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .main {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

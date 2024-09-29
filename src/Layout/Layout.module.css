@@ -19,6 +19,7 @@
   height: auto;
   max-height: 70px;
   width: auto;
+  cursor: pointer;
 }
 .IconAndTitleContainer {
   display: flex;
@@ -157,4 +158,35 @@
   width: 100%;
   padding: 20px;
   flex-grow: 1;
+}
+
+@media (max-width: 570px) {
+  .background {
+    width: 100%;
+  }
+  .headline {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: 185px;
+  }
+  .IconAndTitleContainer {
+    margin-bottom: -20px;
+  }
+  .Routes {
+    margin-top: 60px;
+  }
+  .cartButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-color: black;
+  }
+  .cartIcon {
+    width: 50px;
+    height: auto;
+    margin-bottom: -3px;
+  }
 }

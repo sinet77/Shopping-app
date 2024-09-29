@@ -14,15 +14,6 @@ import Favorites from "../components/Favorites/Favorites";
 import Successful from "../components/ModalSuccessful/Successful";
 import PaymentForm from "../components/PaymentForm/PaymentForm";
 
-/*
-  / -> main page -> wyswietlal produkty
-  /products/:category -> wyswietlal produkty z danej kategorii, jezeli nie bedzie kategory to wszystkie
-  
-  /products 
-  /products/electronics
-
-*/
-
 const router: RouteObject[] = [
   {
     path: "/",
@@ -80,6 +71,10 @@ export default function ProductsLayout() {
     navigate("/favorites");
   };
 
+  const handleMainPageClick = () => {
+    navigate("/products");
+  };
+
   const numberOfProductsInCart = productsInCart.reduce(
     (sum, product) => sum + product.quantity,
     0
@@ -90,6 +85,7 @@ export default function ProductsLayout() {
       <div className={style.headline}>
         <div className={style.IconAndTitleContainer}>
           <img
+            onClick={handleMainPageClick}
             className={style.MainCartImage}
             src="/public/shopping-cart.png"
           ></img>
@@ -123,10 +119,7 @@ export default function ProductsLayout() {
         </div>
       </div>
 
-      <div className={style.Routes}>
-        {/* dodaj width 100% */}
-        {routes}
-      </div>
+      <div className={style.Routes}>{routes}</div>
 
       {modalOpen && (
         <ModalCart isOpen={modalOpen} onClose={handleCloseModal}>

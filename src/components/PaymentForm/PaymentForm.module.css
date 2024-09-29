@@ -88,3 +88,11 @@
   font-weight: bold;
   font-size: 20px;
 }
+
+@media (max-width: 570px) {
+  .form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 20px;
+  }
+}
